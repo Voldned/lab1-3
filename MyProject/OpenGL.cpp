@@ -13,8 +13,7 @@
 using namespace System::Windows::Forms;
 using namespace MyProject;
 
-
-/// инициализация OpenGL
+/// Initializes OpenGL state.
 bool OpenGL::InitGL(GLvoid)
 {
 	glShadeModel(GL_SMOOTH);
@@ -26,7 +25,7 @@ bool OpenGL::InitGL(GLvoid)
 	return TRUE;
 }
 
-/// функция, вызывающаяся при изменении размеров оьласти вывода 
+/// Resizes viewport and projection matrix when the window size changes.
 GLvoid OpenGL::ReSizeGLScene(GLsizei width, GLsizei height)// Resize and initialise the gl window
 {
 	if (height == 0) { height = 1; }
@@ -38,7 +37,8 @@ GLvoid OpenGL::ReSizeGLScene(GLsizei width, GLsizei height)// Resize and initial
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-/// функция, задающая формат пикселя
+
+/// Configures pixel format and creates a render context.
 GLint OpenGL::MySetPixelFormat(HDC hdc)
 {
 	static PIXELFORMATDESCRIPTOR pfd = {
@@ -54,7 +54,7 @@ GLint OpenGL::MySetPixelFormat(HDC hdc)
    0,// Shift Bit Ignored
    0,// No Accumulation Buffer
    0, 0, 0, 0,// Accumulation Bits Ignored
-16,// 16Bit Z-Buffer (Depth Buffer)  
+16,// 16Bit Z-Buffer (Depth Buffer)
 0,// No Stencil Buffer
 0,// No Auxiliary Buffer
 PFD_MAIN_PLANE,// Main Drawing Layer
@@ -84,7 +84,7 @@ PFD_MAIN_PLANE,// Main Drawing Layer
 	return 1;
 }
 
-/// конструктор
+/// Constructor.
 OpenGL::OpenGL(System::Windows::Forms::Form^ parentForm, GLsizei iWidth, GLsizei iHeight)
 {
 	rotated = true;
@@ -106,20 +106,20 @@ OpenGL::OpenGL(System::Windows::Forms::Form^ parentForm, GLsizei iWidth, GLsizei
 	}
 }
 
-/// деструктор
+/// Destructor.
 OpenGL::~OpenGL(System::Void)
 {
 	this->DestroyHandle();
 }
 
-/// функция рисования
+/// Renders a frame.
 System::Void OpenGL::Render(System::Void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor(120, 120, 120, 0);
 	glLoadIdentity();
-	//почему работает только при отрицательном z?
-	glTranslatef(0, 0, -OpenGL::scalsebyte);
+	// Move the scene away from camera along Z axis.
+	glTranslatef(0, 0, -OpenGL::scaleByte);
 
 	Draw();
 

@@ -23,4 +23,9 @@ void DrawLine(float x1, float y1, float x2, float y2, float size);
 
 void InitOpenGL(int width, int height);
 
+inline bool HasDerivativeSignChange(float left, float right)
+{
+	return ((left > 0) && (right < 0)) || ((left < 0) && (right > 0));
+}
+
 void Draw();
