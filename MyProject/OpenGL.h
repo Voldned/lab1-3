@@ -21,7 +21,7 @@ public:
 		~OpenGL(System::Void);
 		GLint MySetPixelFormat(HDC hdc);
 		bool InitGL(GLvoid);
-		byte scalsebyte = 10;
+		byte scaleByte = 10;
 		static short findex = 2;
 		static short begin = -5;
 		static short end = 5;

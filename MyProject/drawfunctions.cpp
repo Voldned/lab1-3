@@ -206,10 +206,13 @@ void DrawMaxMin(float** mas, float xScale, float yScale)
 
 void DrawLocMaxMin(float** masF, float** masFF, float xScale, float yScale)
 {
-	for (USHORT i = 0; i < masSize; i += 1)
+	if (masSize < 2)
+		return;
+
+	for (USHORT i = 0; i + 1 < masSize; i += 1)
 	{
-		if (((masFF[1][i] > 0) && (masFF[1][i+1] < 0)) || ((masFF[1][i] < 0) && (masFF[1][i+1] > 0)))
-			DrawPoint(masF[0][i+1] * xScale, masF[1][i+1] * yScale);
+		if (HasDerivativeSignChange(masFF[1][i], masFF[1][i + 1]))
+			DrawPoint(masF[0][i + 1] * xScale, masF[1][i + 1] * yScale);
 	}
 }
 
